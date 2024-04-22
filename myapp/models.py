@@ -5,6 +5,7 @@ import sqlalchemy.orm as so
 from myapp import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin 
+from myapp import login
 
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
@@ -24,6 +25,9 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+@login.user_loader
+def load_user(id):
+    return db.session.get(User, int(id))
 
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)

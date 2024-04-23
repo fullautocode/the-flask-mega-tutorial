@@ -8,6 +8,6 @@ myappFlaskInstance = Flask(__name__)
 myappFlaskInstance.config.from_object(Config)
 db = SQLAlchemy(myappFlaskInstance)
 migrate = Migrate(myappFlaskInstance, db)
-login = LoginManager(myapp)
+login = LoginManager(myappFlaskInstance)
 
 from myapp import routes, models 
